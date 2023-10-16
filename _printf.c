@@ -1,6 +1,8 @@
 #include "main.h"
 #include <stdarg.h>
+#include <stddef.h>
 
+/* Forward declaration */
 int print_char(char c);
 
 /**
@@ -18,7 +20,10 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 	while (format && format[i])
 	{
-		if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
+		if (format[i] == '%' && (format[i + 1] == 'c' ||
+					 format[i + 1] == 's' ||
+					 format[i + 1] == '%' ||
+					 format[i + 1] == 'r')) /* Added 'r' */
 		{
 			if (format[i + 1] == 'c')
 			{
@@ -39,6 +44,29 @@ int _printf(const char *format, ...)
 			{
 				count += print_char('%');
 			}
+		
+			else if (format[i + 1] == 'r') /* Handle 'r' */
+{
+    char *str = va_arg(args, char *);
+    int j = 0;
+
+    if (str != NULL)
+    {
+        while (str[j])
+        {
+            count += print_char(str[j]);
+            j++;
+        }
+    }
+    else
+    {
+        count += print_char('N'); /* Handle NULL string */
+        count += print_char('U');
+        count += print_char('L');
+        count += print_char('L');
+    }
+}
+
 			i++;
 		}
 		else

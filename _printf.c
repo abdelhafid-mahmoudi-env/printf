@@ -1,13 +1,13 @@
 #include "main.h"
 #include <stdarg.h>
-#include <unistd.h>
 
 int print_char(char c);
 
 /**
  * _printf - Our custom printf function
  * @format: The format string
- * @... : The values to format and print
+ * @...: The values to format and print
+ *
  * Return: The number of characters printed
  */
 int _printf(const char *format, ...)
@@ -16,23 +16,23 @@ int _printf(const char *format, ...)
 	va_list args;
 
 	va_start(args, format);
-
-	while (format[i])
+	while (format && format[i])
 	{
 		if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
 		{
 			if (format[i + 1] == 'c')
 			{
-				char c = (char) va_arg(args, int);
-				count += print_char(c);
+				count += print_char(va_arg(args, int));
 			}
 			else if (format[i + 1] == 's')
 			{
 				char *str = va_arg(args, char *);
-				while (*str)
+				int j = 0;
+
+				while (str && str[j])
 				{
-					count += print_char(*str);
-					str++;
+					count += print_char(str[j]);
+					j++;
 				}
 			}
 			else if (format[i + 1] == '%')

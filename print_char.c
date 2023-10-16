@@ -2,9 +2,10 @@
 #include <unistd.h>
 
 /**
- * print_char - prints a character
- * @c: character to print
- * Return: 1 (number of characters printed)
+ * print_char - Prints a character to stdout
+ * @c: The character to print
+ *
+ * Return: The number of characters printed
  */
 int print_char(char c)
 {

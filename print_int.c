@@ -19,16 +19,11 @@ void write_number(int n)
  */
 int print_int(va_list args)
 {
-    int n;
-    int num;
-    int last_digit;
-    int expo;
-    int count = 0;
+    int n, num, last_digit, expo, count = 0;
 
     n = va_arg(args, int);
     num = n;
     expo = 1;
-
     if (n < 0)
     {
    	 n *= -1;
@@ -36,13 +31,11 @@ int print_int(va_list args)
    	 write(1, "-", 1);
    	 count++;
     }
-
     while (num / 10)
     {
    	 num /= 10;
    	 expo *= 10;
     }
-
     while (expo)
     {
    	 last_digit = n / expo;

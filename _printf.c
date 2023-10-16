@@ -1,4 +1,6 @@
 #include "main.h"
+#include <unistd.h>
+#include <stdarg.h>
 
 /**
  * _printf - Our custom printf function.
@@ -8,34 +10,36 @@
  */
 int _printf(const char *format, ...)
 {
+    int i = 0, count = 0;
     va_list args;
-    int count = 0;
-    unsigned int i = 0;
 
     va_start(args, format);
-
     while (format && format[i])
     {
-   	 if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == 'd'))
+   	 if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
    	 {
-   		 if (format[i + 1] == 'c')
-   			 count += print_char(va_arg(args, int));
-   		 else if (format[i + 1] == 's')
-   			 count += print_string(va_arg(args, char *));
-   		 else if (format[i + 1] == 'd')
-   			 count += print_int(va_arg(args, int));
    		 i++;
+   		 if (format[i] == 'c')
+   		 {
+   			 char c = va_arg(args, int); // va_arg for char promotes to int
+   			 count += write(1, &c, sizeof(char));
+   		 }
+   		 else if (format[i] == 's')
+   		 {
+   			 char *s = va_arg(args, char *);
+   			 while (*s)
+   			 {
+   				 count += write(1, s, 1);
+   				 s++;
+   			 }
+   		 }
+   		 else if (format[i] == '%')
+   			 count += write(1, "%", 1);
    	 }
    	 else
-   	 {
-   		 write(1, &format[i], 1);
-   		 count++;
-   	 }
+   		 count += write(1, &format[i], 1);
    	 i++;
     }
-
     va_end(args);
-
     return (count);
 }
-

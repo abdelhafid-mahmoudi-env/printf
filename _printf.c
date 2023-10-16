@@ -1,53 +1,42 @@
 #include "main.h"
+#include <stdarg.h>
+#include <unistd.h>
 
 /**
-* _printf - Produces output according to a format.
-* @format: A character string.
-* @...: Variable number of arguments.
-*
+* _printf - Our custom printf function.
+* @format: The format string.
+* @...: The values to format and print.
 * Return: The number of characters printed.
 */
 int _printf(const char *format, ...)
 {
-	int index = 0;
-	int length = 0;
-	va_list arg;
-
-	cf_t functions[] = {
+	va_list args;
+	unsigned int i = 0, count = 0;
+	cf_t types[] = {
 		{'c', print_character},
 		{'s', print_string},
-		{'%', print_modulo}
+		{'%', print_modulo},
+		{0, NULL}
 	};
 
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+	if (format == NULL)
 		return (-1);
 
-	va_start(arg, format);
-
-	while (format[index])
+	va_start(args, format);
+	while (format[i])
 	{
-		if (format[index] == '%')
+		if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
 		{
-			if (format[index + 1] == '\0')
-				return (-1);
-
-			for (int j = 0; j < 3; j++) /* Changed from 13 to 3 */
-			{
-				if (format[index + 1] == functions[j].chr)
-				{
-					length += functions[j].func(arg);
-					index += 2;
-					break;
-				}
-			}
+			count += types[format[i + 1] - 'c'].f(args);
+			i += 2;
 		}
 		else
 		{
-			_putchar(format[index]);
-			length++;
-			index++;
+			write(1, &format[i], 1);
+			count++;
+			i++;
 		}
 	}
-	va_end(arg);
-	return (length);
+	va_end(args);
+	return (count);
 }

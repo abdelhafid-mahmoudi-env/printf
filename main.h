@@ -1,9 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
+
 #include <stdarg.h>
+
+/* Prototype of _printf */
 int _printf(const char *format, ...);
-void print_char(va_list args);
-void print_string(va_list args);
-typedef void (*print_func)(va_list args);
+
 #endif /* MAIN_H */
 

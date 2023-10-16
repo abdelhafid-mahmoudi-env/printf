@@ -1,48 +1,45 @@
 #include "main.h"
 
 /**
- * write_number - Converts integer to character and writes to stdout.
- * @n: The integer.
+ * printf_integer - prints intiger number
+ * @args: number arguements
+ * @printed: the printed characters
+ * Return: printed charcaters
  */
-void write_number(int n)
+
+int printf_int(va_list args, int printed)
 {
-    char c;
+	int num = va_arg(args, int);
+	int digits = 0;
+	int temp = num;
+	int digit;
 
-    c = n + '0';
-    write(1, &c, 1);
-}
+	if (num < 0)
+	{
+		printed += _putchar('-');
+		num = -num;
 
-/**
- * print_int - Prints an integer.
- * @args: A va_list pointing to the integer to print.
- * Return: The number of characters printed.
- */
-int print_int(va_list args)
-{
-    int n, num, last_digit, expo, count = 0;
+		temp = num;
+	}
 
-    n = va_arg(args, int);
-    num = n;
-    expo = 1;
-    if (n < 0)
-    {
-   	 n *= -1;
-   	 num *= -1;
-   	 write(1, "-", 1);
-   	 count++;
-    }
-    while (num / 10)
-    {
-   	 num /= 10;
-   	 expo *= 10;
-    }
-    while (expo)
-    {
-   	 last_digit = n / expo;
-   	 n %= expo;
-   	 write_number(last_digit);
-   	 count++;
-   	 expo /= 10;
-    }
-    return (count);
+	do {
+		digits++;
+		temp /= 10;
+	} while (temp != 0);
+
+	while (digits > 0)
+	{
+		int pow10 = 1;
+		int i;
+
+		for (i = 1; i < digits; i++)
+		{
+			pow10 *= 10;
+		}
+		digit = num / pow10;
+		printed += _putchar(digit + '0');
+		num -= digit * pow10;
+		digits--;
+	}
+	return (printed);
 }

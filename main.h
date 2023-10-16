@@ -1,15 +1,16 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdio.h>
 #include <stdarg.h>
+#include <unistd.h>
+#include <limits.h>
 
-/* Prototype for the main _printf function */
+int _putchar(char character);
+int printf_char(va_list args, int printed);
+int printf_int(va_list args, int printed);
 int _printf(const char *format, ...);
+int selector(const char *format, va_list args, int printed);
+int printf_string(va_list args, int printed);
 
-/* Prototypes for functions to handle format specifiers */
-int print_char(va_list args);
-int print_string(va_list args);
-int print_int(va_list args);
-
-#endif /* MAIN_H */
-
+#endif

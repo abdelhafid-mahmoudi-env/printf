@@ -1,12 +1,11 @@
 #include "main.h"
-
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
+ * _putchar - user defined putchar that prints to the stdout
+ * @c: variable character to be printed
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: 1 success, -1 error
  */
+
 int _putchar(char c)
 {
 	return (write(1, &c, 1));

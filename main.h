@@ -6,7 +6,6 @@
 #include <stdio.h>
 
 int _putchar(char c);
-int _printf(const char *format, ...);
 int printf_str(va_list args, int printed);
 int printf_char(va_list args, int printed);
 int _percent(char *format, va_list list);

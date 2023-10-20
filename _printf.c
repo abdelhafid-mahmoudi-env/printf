@@ -4,31 +4,31 @@
 #include <stdlib.h>
 
 /**
- * handle_specifiers - handles char
+ * pluck - handles char
  * @args: variadic arguments
  * @format: the initial string to extract specifiers from
  *
  * Return: int
  */
 
-int handle_specifiers(const char **format, va_list *args)
+int pluck(const char **format, va_list *args)
 {
 	int c;
 
 	switch (*(++(*format)))
 	{
 		case 'c':
-			c = write_char(args);
+			c = p_char(args);
 			break;
 		case 's':
-			c = write_string(args);
+			c = p_str(args);
 			break;
 		case '%':
 			c = write(1, "%", 1);
 			break;
 		case 'i':
 		case 'd':
-			c = write_int(args);
+			c = p_integer(args);
 			break;
 		case ' ':
 			c = -1;
@@ -65,7 +65,7 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			c = handle_specifiers(&format, &args);
+			c = pluck(&format, &args);
 			if (c == -1)
 				return (c);
 			sum += c;

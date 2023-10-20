@@ -2,13 +2,13 @@
 #include <unistd.h>
 #include <string.h>
 /**
- * write_string - writes a string to fd 1 or returns -1
+ * p_str - writes a string to fd 1 or returns -1
  * @args: variadic list to pick the string from
  *
  * Return: strlen or -1
  */
 
-int write_string(va_list *args)
+int p_str(va_list *args)
 {
 	char *s;
 

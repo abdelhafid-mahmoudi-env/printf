@@ -3,13 +3,13 @@
 #include <string.h>
 
 /**
- * reverse_string - reverses string
+ * reversing - allowing to reverse
  * @s: string to reverse
  *
  * Return: nothing
  */
 
-void reverse_string(char *s)
+void reversing(char *s)
 {
 	int start, end;
 	char temp;
@@ -23,13 +23,13 @@ void reverse_string(char *s)
 	}
 }
 /**
- * int_to_string - converts an int to a reversed string
+ * stringify - this function allows to stringify the number
  * @number: number to reverse
  *
  * Return: string
  */
 
-char *int_to_string(int number)
+char *stringify(int number)
 {
 	char *s;
 	int i = 0;
@@ -55,6 +55,6 @@ char *int_to_string(int number)
 	if (number < 0)
 		s[i++] = '-';
 	s[i] = '\0';
-	reverse_string(s);
+	reversing(s);
 	return (s);
 }

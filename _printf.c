@@ -1,52 +1,85 @@
 #include "main.h"
-#include <stdarg.h>
 #include <unistd.h>
+#include <stdarg.h>
+#include <stdlib.h>
 
 /**
- * _printf - Custom printf function that prints formatted output.
- * @format: The format string.
- * @...: Variable number of arguments.
- * Return: The number of characters printed.
+ * handle_specifiers - handles char
+ * @args: variadic arguments
+ * @format: the initial string to extract specifiers from
+ *
+ * Return: int
  */
+
+int handle_specifiers(const char **format, va_list *args)
+{
+	int c;
+
+	switch (*(++(*format)))
+	{
+		case 'c':
+			c = write_char(args);
+			break;
+		case 's':
+			c = write_string(args);
+			break;
+		case '%':
+			c = write(1, "%", 1);
+			break;
+		case 'i':
+		case 'd':
+			c = write_int(args);
+			break;
+		case ' ':
+			c = -1;
+			break;
+		case '\0':
+			c = -1;
+			break;
+		default:
+			--(*format);
+			c = write(1, *format, 1);
+			break;
+	}
+	return (c);
+}
+
+/**
+ * _printf - mimics std printf
+ * @format: format specifying string
+ *
+ * Return: number of chars printed or -1 on failure
+ */
+
 int _printf(const char *format, ...)
 {
+	int c, sum = 0;
 	va_list args;
-	int count = 0;
-	char c;
-	char *str;
+
+	if (!format)
+		return (-1);
 
 	va_start(args, format);
-	while (*format)
+
+	while (*format != '\0')
 	{
 		if (*format == '%')
 		{
+			c = handle_specifiers(&format, &args);
+			if (c == -1)
+				return (c);
+			sum += c;
 			format++;
-			if (*format == 'c')
-			{
-				c = va_arg(args, int);
-				putchar(c);
-				count++;
-			}
-			else if (*format == 's')
-			{
-				str = va_arg(args, char *);
-				count += _puts(str);
-			}
-			else if (*format == '%')
-			{
-				putchar('%');
-				count++;
-			}
 		}
 		else
 		{
-			putchar(*format);
-			count++;
+			c = write(1, format, 1);
+			if (c == -1)
+				return (c);
+			sum++;
+			format++;
 		}
-		format++;
 	}
-
 	va_end(args);
-	return (count);
+	return (sum);
 }
-

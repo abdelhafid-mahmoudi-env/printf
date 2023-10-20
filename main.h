@@ -1,11 +1,12 @@
-#ifndef MAIN_H
-#define MAIN_H
-
-#include <stdio.h>
+#ifndef _MAIN_H_
+#define _MAIN_H_
 #include <stdarg.h>
 
 int _printf(const char *format, ...);
-int _puts(const char *str);
+int write_char(va_list *args);
+int write_int(va_list *args);
+int write_string(va_list *args);
+int write_int(va_list *args);
+char *int_to_string(int number);
 
-#endif
-
+#endif /* _MAIN_H_ */

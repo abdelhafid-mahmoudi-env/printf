@@ -1,5 +1,3 @@
-#include <unistd.h>
-#include <stdarg.h>
 #include "main.h"
 
 /**
@@ -10,8 +8,8 @@
  */
 int print_percent(va_list args)
 {
-    (void)args; // Unused parameter
-    write(1, "%", 1);
+    (void)args;
+    _putchar('%');
     return 1;
 }
 

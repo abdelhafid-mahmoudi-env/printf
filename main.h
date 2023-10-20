@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 int _printf(const char *format, ...);
+int _puts(const char *str);
 
 #endif /* MAIN_H */
 

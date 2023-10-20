@@ -1,13 +1,12 @@
 #include "main.h"
 #include <stdarg.h>
-#include <unistd.h>
 
 /**
- * _printf - Print output according to a format
- * @format: A format string containing zero or more directives
- * @...: Variable number of arguments based on the format string
+ * _printf - Custom printf function
+ * @format: The format string
+ * @...: Variadic arguments
  *
- * Return: The number of characters printed (excluding the null byte)
+ * Return: Number of characters printed (excluding null byte)
  */
 int _printf(const char *format, ...)
 {
@@ -15,8 +14,7 @@ int _printf(const char *format, ...)
     int count = 0;
 
     va_start(args, format);
-
-    while (format && *format)
+    while (*format)
     {
         if (*format != '%')
         {
@@ -26,30 +24,16 @@ int _printf(const char *format, ...)
         else
         {
             format++;
-            if (*format == '\0')
-                break;
-
             if (*format == 'c')
                 count += print_char(args);
             else if (*format == 's')
                 count += print_string(args);
             else if (*format == '%')
-            {
-                write(1, "%", 1);
-                count++;
-            }
-            else
-            {
-                write(1, "%", 1);
-                count++;
-                write(1, format, 1);
-                count++;
-            }
+                count += print_percent(args);
         }
         format++;
     }
-
     va_end(args);
-    return (count);
+    return count;
 }
 

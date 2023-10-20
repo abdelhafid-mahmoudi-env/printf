@@ -13,6 +13,8 @@ int _printf(const char *format, ...)
 	int count = 0;
 	char c;
 	char *str;
+	int len = 0;
+	char percent = '%';
 
 	va_start(args, format);
 	while (*format)
@@ -23,23 +25,28 @@ int _printf(const char *format, ...)
 			if (*format == 'c')
 			{
 				c = va_arg(args, int);
-				putchar(c);
+				write(1, &c, 1);
 				count++;
 			}
 			else if (*format == 's')
 			{
 				str = va_arg(args, char *);
-				count += _puts(str);
+				len = 0;
+				while(str[len])
+					len++;
+				write(1, str, len);
+				count += len;
 			}
 			else if (*format == '%')
 			{
-				putchar('%');
+				percent = '%';
+				write(1, &percent, 1);
 				count++;
 			}
 		}
 		else
 		{
-			putchar(*format);
+			write(1, format, 1);
 			count++;
 		}
 		format++;

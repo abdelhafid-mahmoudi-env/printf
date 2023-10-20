@@ -20,17 +20,13 @@ int _printf(const char *format, ...)
 		{
 			format++;
 			if (*format == 'c')
-			{
-				char c = va_arg(args, int);
-				
-				putchar(c);
+			{i
+				putchar(va_arg(args, int));
 				count++;
 			}
 			else if (*format == 's')
 			{
-				char *str = va_arg(args, char *);
-
-				count += _puts(str);
+				count += _puts(va_arg(args, char *));
 			}
 			else if (*format == '%')
 			{
